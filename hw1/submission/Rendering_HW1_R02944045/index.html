@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>
+Rendering - HW1
+</title>
+    <link rel="stylesheet" type="text/css" href="simple.css">
+</head>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<h2> Homework 1 - Height Field Intersection</h2>
+
+<p>CS348B - Image Synthesis</p>
+
+<p><font color="#008000">shen chao - R02944045</font></p>
+<p>Date submitted: <font color="#008000">2014/10/28</font></p>
+
+<p>Code emailed: <font color="#008000">2014/10/28</font></p>
+
+<h3>Description of implementation approach and comments</h3>
+
+<br />
+<p ALIGN="LEFT"><font color="#008000">1. heightfield-ray intersection</font></p>
+
+<p ALIGN="LEFT"><font color="#008000">
+
+<br />
+KEY 1: <br />
+Split all the mesh to vector triangles. <br />
+<img border="0" src="temp1.jpg" > <br />
+Fastheightfield::Fastheightfield(...){} is use to initial HFTriangles <br />
+Fastheightfield::Intersect(...){} implement by call HFTriangle's Intersect(...){} <br />
+Fastheightfield::IntersectP(...){} implement by call HFTriangle's IntersectP(...){} <br />
+
+<br />
+KEY 2: <br />
+HFTriangle's intersect implement by ray-triangle intersect method. <br />
+<img border="0" src="temp2.jpg" > <br />
+
+<br />
+KEY 3: <br />
+Use Grid Acceleration architecture. <br />
+Create Three Level BBox data structure. <br />
+The first level is triangle's bbox.<br />
+The second level is one grid's bbox in quad heightmesh.<br />
+The third level is one line grids' bbox in quad heightmesh.<br /> 
+<img border="0" src="temp3.jpg" > <br />
+Initial Three Level BBox in triangle creation in Fastheightfield::Fastheightfield(...){}. <br />
+<img border="0" src="temp4.jpg" > <br />
+Grid Test In Fastheightfield::Intersect(...){} First. <br />
+<img border="0" src="temp5.jpg" > <br />
+
+</font></p>
+
+<p ALIGN="LEFT"><font color="#008000">2. smooth shading</font></p>
+
+<p ALIGN="LEFT"><font color="#008000">
+
+Here use the pure Phong interpolation method. <br />
+<img border="0" src="temp6.jpg" > <br />
+
+</font></p>
+
+<p ALIGN="LEFT"><font color="#008000">3. performance and others</font></p>
+
+<p ALIGN="LEFT"><font color="#008000">
+
+Because my implementation use phone interpolation and the original is not, my result is not fast than original method. <br />
+
+</font></p>
+
+<h3>Final Images Rendered with my implementation of heightfield.cpp</h3>
+<p>&nbsp;
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="50%"><img border="0" src="hftest.jpg" width="400" height="400">
+      <p><font color="#008000"><tt>hftest.pbrt </tt> </font>
+      <p><font color="#008000">Timings:</font>
+      <ul>
+        <li><font color="#008000">Original - (without Phong interpolation): 1.0 seconds</font></li>
+        <li><font color="#008000">My implementation - (with Phong interpolation): 1.0 seconds (100% original)</font></li>
+      </ul>
+    </td>
+    <td width="50%"><img border="0" src="landsea-0.jpg" width="400" height="400">
+      <p><font color="#008000"><tt>landsea-0.pbrt </tt></font>
+      <p><font color="#008000">Timings:</font>
+      <ul>
+        <li><font color="#008000">Original - (without Phong interpolation): 11.9 seconds</font></li>
+        <li><font color="#008000">My implementation - (with Phong interpolation): 37.8 seconds (318% original)</font></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%"></td>
+    <td width="50%"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="landsea-1.jpg" width="400" height="400">
+      <p><font color="#008000"><tt>landsea-1.pbrt </tt> <tt> </tt> (with Phong
+      interpolation)</font>
+      <p><font color="#008000">Timings:</font>
+      <ul>
+        <li><font color="#008000">Original - (without Phong interpolation): 12.8 seconds</font></li>
+        <li><font color="#008000">My implementation - (with Phong interpolation): 150.7 seconds (1177% original)</font></li>
+      </ul>
+    </td>
+    <td width="50%"><img border="0" src="landsea-2.jpg" width="400" height="400">
+      <p><font color="#008000"><tt>landsea-2.pbrt </tt> <tt> </tt> (with Phong
+      interpolation)</font>
+      <p><font color="#008000">Timings:</font>
+      <ul>
+        <li><font color="#008000">Original - (without Phong interpolation): 10.6 seconds</font></li>
+        <li><font color="#008000">My implementation - (with Phong interpolation): 115.6 seconds (1090% original)</font></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%"></td>
+    <td width="50%"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="texture.jpg" width="400" height="400">
+      <p><font color="#008000"><tt>texture.pbrt </tt> (with Phong interpolation)</font>
+      <p><font color="#008000">Timings:</font>
+      <ul>
+        <li><font color="#008000">Original - (without Phong interpolation): 7.3 seconds</font></li>
+        <li><font color="#008000">My implementation - (with Phong interpolation): 27.1 seconds (371% original)</font></li>
+      </ul>
+    </td>
+    <td width="50%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%"></td>
+    <td width="50%"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img border="0" src="landsea-big.jpg" width="600" height="600"></p>
+<p><font color="#008000"><tt>landsea-big.pbrt </tt> (with Phong interpolation)</font></p>
+      <p><font color="#008000">Timings:</font>
+<ul>
+  <li><font color="#008000">Original - (without Phong interpolation): 26.9 seconds</font></li>
+  <li><font color="#008000">My implementation - (with Phong interpolation): 27.4 seconds (101% original)</font></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
